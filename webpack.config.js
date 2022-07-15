@@ -11,6 +11,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/index.html'),
+      hash: true,
     }),
   ],
   // Export the production build to the dist folder, in the file main.js
