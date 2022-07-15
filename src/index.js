@@ -4,7 +4,7 @@ import 'bootstrap';
 function component() {
   const element = document.createElement('div');
 
-  element.innerHTML = 'Hello webpack';
+  element.innerHTML = '<i class="bi-alarm"></i>';
   element.classList.add('hello');
 
   return element;
