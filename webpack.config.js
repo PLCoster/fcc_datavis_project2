@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/index.js',
   devtool: 'inline-source-map',
   devServer: {
-    directory: path.join(__dirname, 'dist'),
+    static: path.join(__dirname, '/dist'),
   },
   // Generate index.html from template file during build
   plugins: [
