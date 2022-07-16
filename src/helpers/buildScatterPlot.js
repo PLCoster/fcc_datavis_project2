@@ -1,6 +1,6 @@
-export default async function buildScatterPlot(data, width) {
+export default async function buildScatterPlot(raceData, width) {
   const d3 = await import('d3'); // Dynamic Import of d3
-  console.log('ScatterPlot Data: ', data);
+  console.log('ScatterPlot Data: ', raceData);
   console.log('D3 is: ', d3);
 
   const graphContainer = d3.select('#graph-container');
@@ -25,7 +25,7 @@ export default async function buildScatterPlot(data, width) {
 
   graphContainer.append('label').html('TODO - ADD LABEL');
 
-  const [xMin, xMax] = d3.extent(data, (timeObj) => timeObj.Year);
+  const [xMin, xMax] = d3.extent(raceData, (timeObj) => timeObj.Year);
 
   // Create Scales for x and y axes of graph:
   const xscale = d3
@@ -36,7 +36,7 @@ export default async function buildScatterPlot(data, width) {
 
   const yscale = d3
     .scaleLinear()
-    .domain(d3.extent(data, (timeObj) => timeObj.Seconds))
+    .domain(d3.extent(raceData, (timeObj) => timeObj.Seconds))
     .range([padding, height - padding])
     .nice();
 
@@ -79,5 +79,17 @@ export default async function buildScatterPlot(data, width) {
     .attr('y', height - 40);
 
   // Add data points to the ScatterPlot
+  graphSVG
+    .selectAll('circle')
+    .data(raceData)
+    .enter()
+    .append('circle')
+    .attr('cx', (d) => xscale(d.Year))
+    .attr('cy', (d) => yscale(d.Seconds))
+    .attr('r', 5)
+    .attr('fill', (d) =>
+      d.Doping ? 'rgba(255,0,0,0.5)' : 'rgba(0,0,255,0.5)'
+    );
+
   console.log('Made it here!!!!');
 }
