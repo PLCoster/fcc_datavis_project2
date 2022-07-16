@@ -1,6 +1,18 @@
+/* OVERALL STYLES */
+body {
+  background-color: lightblue;
+  min-height: 100vh;
+}
+
 /* NAVBAR */
 .navbar {
   background-color: gold;
+}
+
+/* MAIN */
+main {
+  margin-top: 5vh;
+  background-color: #fff;
 }
 
 .hello {
