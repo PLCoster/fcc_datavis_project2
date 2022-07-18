@@ -3,6 +3,7 @@ import './styles.scss';
 import fetchData from './helpers/fetchData';
 import buildScatterPlot from './helpers/buildScatterPlot';
 
+// Helper function that returns the width of the element specified by the selectorString
 function getWidth(selectorString) {
   return document.querySelector(selectorString).getBoundingClientRect().width;
 }
