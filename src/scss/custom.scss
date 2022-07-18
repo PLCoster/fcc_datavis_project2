@@ -21,20 +21,24 @@ main {
 }
 
 #tooltip {
-  padding: 5px;
-  border: 1px solid black;
-  border-radius: 5px;
   transition: opacity 1s, width 1s;
   overflow: hidden;
   white-space: nowrap;
 
-  p {
-    font-size: 12px;
-    margin: 0;
-  }
+  div {
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
 
-  .details {
-    margin-top: 10px;
-    white-space: normal;
+    p {
+      font-size: 12px;
+      margin: 0;
+    }
+
+    .details {
+      width: 190px;
+      margin-top: 10px;
+      white-space: normal;
+    }
   }
 }
