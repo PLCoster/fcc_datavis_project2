@@ -22,7 +22,6 @@ export default async function buildScatterPlot(raceData, containerWidth) {
 
   const graphContainer = d3.select('#graph-container');
   graphContainer.html(''); // Remove 'Loading...' message or any previous graph svg
-  // d3.select('#graph-container').text(data);
 
   // Add h1 title to graph
   graphContainer
