@@ -177,4 +177,36 @@ export default async function buildScatterPlot(raceData, width) {
       tooltipContainer.style('opacity', 0.0).style('width', '0');
       graphSVG.selectAll('.dot').attr('stroke', 'none').attr('r', 5);
     });
+
+  // Add Legend to the chart (done last to avoid conflict with .dot circles)
+  const legendContainer = graphSVG.append('g').attr('id', 'legend');
+
+  const legendX = width - padding - 220;
+  const legendY = padding + 50;
+
+  legendContainer
+    .append('text')
+    .attr('x', legendX + 20)
+    .attr('y', legendY)
+    .text('Alleged Doping');
+
+  legendContainer
+    .append('circle')
+    .attr('cx', legendX)
+    .attr('cy', legendY - 5)
+    .attr('r', 5)
+    .attr('fill', DOPED_COLOR);
+
+  legendContainer
+    .append('text')
+    .attr('x', legendX + 20)
+    .attr('y', legendY + 30)
+    .text('No Doping Allegations');
+
+  legendContainer
+    .append('circle')
+    .attr('cx', legendX)
+    .attr('cy', legendY + 25)
+    .attr('r', 5)
+    .attr('fill', CLEAN_COLOR);
 }
