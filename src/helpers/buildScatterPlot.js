@@ -32,7 +32,8 @@ export default async function buildScatterPlot(raceData, width) {
 
   width = 1000;
   const height = 0.6 * width;
-  const padding = 80;
+  const paddingLarge = 80;
+  const paddingSmall = 20;
 
   const DOPED_COLOR = 'rgba(255,0,0,0.3)';
   const CLEAN_COLOR = 'rgba(0,0,255,0.3)';
@@ -51,19 +52,19 @@ export default async function buildScatterPlot(raceData, width) {
   const xscale = d3
     .scaleLinear()
     .domain([xMin - 1, xMax + 1])
-    .range([padding, width - padding]);
+    .range([paddingLarge, width - paddingSmall]);
 
   const yscale = d3
     .scaleLinear()
     .domain(d3.extent(raceData, (timeObj) => timeObj.Seconds))
-    .range([padding, height - padding])
+    .range([paddingSmall, height - paddingLarge])
     .nice();
 
   // Add axes to the chart:
   const xAxis = d3.axisBottom(xscale).tickFormat((year) => year.toString());
   graphSVG
     .append('g')
-    .attr('transform', `translate(0, ${height - padding})`)
+    .attr('transform', `translate(0, ${height - paddingLarge})`)
     .attr('id', 'x-axis')
     .call(xAxis);
 
@@ -77,7 +78,7 @@ export default async function buildScatterPlot(raceData, width) {
     );
   graphSVG
     .append('g')
-    .attr('transform', `translate(${padding}, 0)`)
+    .attr('transform', `translate(${paddingLarge}, 0)`)
     .attr('id', 'y-axis')
     .call(yAxis);
 
@@ -181,8 +182,8 @@ export default async function buildScatterPlot(raceData, width) {
   // Add Legend to the chart (done last to avoid conflict with .dot circles)
   const legendContainer = graphSVG.append('g').attr('id', 'legend');
 
-  const legendX = width - padding - 220;
-  const legendY = padding + 50;
+  const legendX = width - paddingSmall - 220;
+  const legendY = paddingSmall + 50;
 
   legendContainer
     .append('text')
