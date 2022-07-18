@@ -3,6 +3,10 @@ import './styles.scss';
 import fetchData from './helpers/fetchData';
 import buildScatterPlot from './helpers/buildScatterPlot';
 
+function getWidth(selectorString) {
+  return document.querySelector(selectorString).getBoundingClientRect().width;
+}
+
 // When DOM content is loaded, fetch data then build graph
 document.addEventListener('DOMContentLoaded', async () => {
   await import('bootstrap'); // Dynamic Import of Bootstrap JS after DOM Loads
@@ -11,6 +15,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   fetchData(
     'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json',
   ).then((graphData) => {
-    buildScatterPlot(graphData);
+    // Build initial plot and set event to re-render plot on window width change
+    buildScatterPlot(graphData, getWidth('#graph-container'));
+
+    window.addEventListener('resize', () => {
+      buildScatterPlot(graphData, getWidth('#graph-container'));
+    });
   });
 });

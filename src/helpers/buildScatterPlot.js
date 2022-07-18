@@ -17,7 +17,7 @@ function addToolTip(tooltipContainer, pointData) {
   }
 }
 
-export default async function buildScatterPlot(raceData, width) {
+export default async function buildScatterPlot(raceData, containerWidth) {
   const d3 = await import('d3'); // Dynamic Import of d3
 
   const graphContainer = d3.select('#graph-container');
@@ -30,8 +30,12 @@ export default async function buildScatterPlot(raceData, width) {
     .attr('id', 'title')
     .text("35 Fastest Times Cycling Alpe d'Heuz");
 
-  width = 1000;
-  const height = 0.6 * width;
+  graphContainer
+    .append('h3')
+    .text('Comparison of Allegedy Doped vs. Clean Ascent Times');
+
+  const width = Math.max(696, containerWidth);
+  const height = 0.5 * width;
   const paddingLarge = 80;
   const paddingSmall = 20;
 
@@ -44,7 +48,14 @@ export default async function buildScatterPlot(raceData, width) {
     .attr('width', width)
     .attr('height', height);
 
-  graphContainer.append('label').html('TODO - ADD LABEL');
+  graphContainer
+    .append('label')
+    .html(
+      "<a href=\"https://en.wikipedia.org/wiki/Alpe_d'Huez\">L'Alpe d'Huez</a> is climbed regularly as a stage in the Tour de France",
+    );
+  graphContainer
+    .append('label')
+    .html('The above times are based on the 13.8km course to the summit');
 
   const [xMin, xMax] = d3.extent(raceData, (timeObj) => timeObj.Year);
 
@@ -57,14 +68,14 @@ export default async function buildScatterPlot(raceData, width) {
   const yscale = d3
     .scaleLinear()
     .domain(d3.extent(raceData, (timeObj) => timeObj.Seconds))
-    .range([paddingSmall, height - paddingLarge])
+    .range([paddingSmall, height - paddingLarge / 2])
     .nice();
 
   // Add axes to the chart:
   const xAxis = d3.axisBottom(xscale).tickFormat((year) => year.toString());
   graphSVG
     .append('g')
-    .attr('transform', `translate(0, ${height - paddingLarge})`)
+    .attr('transform', `translate(0, ${height - paddingLarge / 2})`)
     .attr('id', 'x-axis')
     .call(xAxis);
 
@@ -82,21 +93,23 @@ export default async function buildScatterPlot(raceData, width) {
     .attr('id', 'y-axis')
     .call(yAxis);
 
-  // !!! Add axis labels
+  // Add axis labels
   graphSVG
     .append('text')
     .attr('transform', 'rotate(-90)')
     .text('Time (MM:SS)')
-    .attr('x', -yscale(0))
+    .attr('x', -height / 2)
     .attr('y', 30)
-    .style('font-size', `${Math.round(0.015 * width)}px`);
+    .style('font-size', `${Math.max(Math.round(0.015 * width), 15)}px`)
+    .style('font-weight', 600);
 
   graphSVG
     .append('text')
-    .style('font-size', `${Math.round(0.015 * width)}px`)
+    .style('font-size', `${Math.max(Math.round(0.015 * width), 15)}px`)
     .text('Year')
-    .attr('x', width / 2 - 45)
-    .attr('y', height - 40);
+    .attr('x', width / 2)
+    .attr('y', height)
+    .style('font-weight', 600);
 
   // Add data points to the ScatterPlot
   graphSVG
