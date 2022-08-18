@@ -1,5 +1,6 @@
 import './styles.scss';
 
+import addNavBar from './helpers/addNavBar';
 import fetchData from './helpers/fetchData';
 import buildScatterPlot from './helpers/buildScatterPlot';
 
@@ -11,6 +12,9 @@ function getWidth(selectorString) {
 // When DOM content is loaded, fetch data then build graph
 document.addEventListener('DOMContentLoaded', async () => {
   await import('bootstrap'); // Dynamic Import of Bootstrap JS after DOM Loads
+
+  addNavBar(); // Add NavBar elements
+  document.querySelector('style').innerHTML = ''; // Remove initial basic styles
 
   // Fetch Data from API / File and then build the plot
   fetchData(
