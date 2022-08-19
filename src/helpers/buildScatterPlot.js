@@ -149,13 +149,13 @@ export default async function buildScatterPlot(raceData, containerWidth) {
         .style('display', 'block')
         .style('width', '180px')
         .style('opacity', 1.0)
-        .style('top', `${event.layerY - 20}px`);
+        .style('top', `${event.pageY - 20}px`);
 
       // Position tooltip to the left or right of the cursor depending on position
       if (pointData.Year - xMin < (xMax - xMin) / 2) {
-        tooltipContainer.style('left', `${event.layerX + 20}px`);
+        tooltipContainer.style('left', `${event.pageX + 20}px`);
       } else {
-        tooltipContainer.style('left', `${event.layerX - 220}px`);
+        tooltipContainer.style('left', `${event.pageX - 220}px`);
       }
 
       // Add text to the ToolTip for any points lying under the mouse:
@@ -178,7 +178,7 @@ export default async function buildScatterPlot(raceData, containerWidth) {
       tooltipContainer.style(
         'top',
         `${
-          event.layerY -
+          event.pageY -
           Math.round(tooltipContainer.node().getBoundingClientRect().height / 2)
         }px`,
       );
