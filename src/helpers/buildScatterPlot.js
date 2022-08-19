@@ -31,7 +31,7 @@ export default async function buildScatterPlot(raceData, containerWidth) {
 
   graphContainer
     .append('h3')
-    .text('Comparison of Allegedy Doped vs. Clean Ascent Times');
+    .text('Comparison of Allegedly Doped vs. Clean Ascent Times');
 
   const width = Math.max(420, containerWidth);
   const height = Math.max(0.5 * width, 400);
