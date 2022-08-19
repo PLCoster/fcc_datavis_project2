@@ -5,12 +5,13 @@ module.exports = {
   entry: './src/index.js',
   devtool: 'inline-source-map',
   devServer: {
-    static: path.join(__dirname, '/dist'),
+    static: path.join(__dirname, '/assets'),
   },
   // Generate index.html from template file during build
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/index.html'),
+      favicon: path.resolve(__dirname, 'assets/favicon.ico'),
     }),
   ],
   // Export the production build to the dist folder, in the file main.js
