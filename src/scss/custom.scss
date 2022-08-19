@@ -14,8 +14,9 @@ body {
 }
 
 /* MAIN */
-main {
-  margin: 3vh 0;
+main.container-md {
+  margin: 3vh auto;
+  padding: 0;
   background-color: lightyellow;
 }
 
@@ -23,8 +24,9 @@ main {
   padding: 12px 0 12px 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1s;
 
   #title {
     margin-bottom: 0;
@@ -43,6 +45,7 @@ main {
 #tooltip {
   transition: opacity 1s, width 1s;
   overflow: hidden;
+  text-align: left;
   white-space: nowrap;
 
   div {

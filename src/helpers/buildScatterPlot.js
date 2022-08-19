@@ -33,10 +33,12 @@ export default async function buildScatterPlot(raceData, containerWidth) {
     .append('h3')
     .text('Comparison of Allegedy Doped vs. Clean Ascent Times');
 
-  const width = Math.max(696, containerWidth);
-  const height = 0.5 * width;
+  const width = Math.max(420, containerWidth);
+  const height = Math.max(0.5 * width, 400);
   const paddingLarge = 80;
   const paddingSmall = 20;
+
+  const axisLabelFontSize = Math.max(Math.round(0.015 * width), 14);
 
   const DOPED_COLOR = 'rgba(255,0,0,0.3)';
   const CLEAN_COLOR = 'rgba(0,0,255,0.3)';
@@ -76,7 +78,9 @@ export default async function buildScatterPlot(raceData, containerWidth) {
     .append('g')
     .attr('transform', `translate(0, ${height - paddingLarge / 2})`)
     .attr('id', 'x-axis')
-    .call(xAxis);
+    .call(xAxis)
+    .selectAll('text') // Alter axis tick labels
+    .style('font-size', `${axisLabelFontSize - 4}px`);
 
   const yAxis = d3
     .axisLeft(yscale)
@@ -86,6 +90,7 @@ export default async function buildScatterPlot(raceData, containerWidth) {
           .toString()
           .padStart(2, '0')}`,
     );
+
   graphSVG
     .append('g')
     .attr('transform', `translate(${paddingLarge}, 0)`)
@@ -99,12 +104,12 @@ export default async function buildScatterPlot(raceData, containerWidth) {
     .text('Time (MM:SS)')
     .attr('x', -height / 2)
     .attr('y', 30)
-    .style('font-size', `${Math.max(Math.round(0.015 * width), 15)}px`)
+    .style('font-size', `${axisLabelFontSize}px`)
     .style('font-weight', 600);
 
   graphSVG
     .append('text')
-    .style('font-size', `${Math.max(Math.round(0.015 * width), 15)}px`)
+    .style('font-size', `${axisLabelFontSize}px`)
     .text('Year')
     .attr('x', width / 2)
     .attr('y', height)
@@ -194,13 +199,14 @@ export default async function buildScatterPlot(raceData, containerWidth) {
   // Add Legend to the chart (done last to avoid conflict with .dot circles)
   const legendContainer = graphSVG.append('g').attr('id', 'legend');
 
-  const legendX = width - paddingSmall - 220;
-  const legendY = paddingSmall + 50;
+  const legendX = width - axisLabelFontSize * 15;
+  const legendY = paddingSmall + 20;
 
   legendContainer
     .append('text')
     .attr('x', legendX + 20)
     .attr('y', legendY)
+    .style('font-size', `${axisLabelFontSize}px`)
     .text('Alleged Doping');
 
   legendContainer
@@ -214,6 +220,7 @@ export default async function buildScatterPlot(raceData, containerWidth) {
     .append('text')
     .attr('x', legendX + 20)
     .attr('y', legendY + 30)
+    .style('font-size', `${axisLabelFontSize}px`)
     .text('No Doping Allegations');
 
   legendContainer
@@ -222,4 +229,7 @@ export default async function buildScatterPlot(raceData, containerWidth) {
     .attr('cy', legendY + 25)
     .attr('r', 5)
     .attr('fill', CLEAN_COLOR);
+
+  // When plot is built, set graph container opacity to 1
+  graphContainer.style('opacity', 1);
 }
