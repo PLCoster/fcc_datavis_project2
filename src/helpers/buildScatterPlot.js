@@ -147,7 +147,7 @@ export default async function buildScatterPlot(raceData, containerWidth) {
         .attr('data-year', pointData.Year)
         .attr('data-time', pointData.Seconds)
         .style('display', 'block')
-        .style('width', '200px')
+        .style('width', '180px')
         .style('opacity', 1.0)
         .style('top', `${event.layerY - 20}px`);
 
